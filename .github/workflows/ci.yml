@@ -22,12 +22,16 @@ jobs:
     outputs:
       versions: ${{ steps.check-versions.outputs.versions }}
     steps:
+      - name: Install regctl
+        uses: iarekylew00t/regctl-installer@v4
       - name: Check for new kubectl versions
         id: check-versions
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          EXISTING_TAGS=$(crane ls ghcr.io/${{ github.repository }} 2>/dev/null | jq -R . | jq -s .)
+          set -eux
+
+          EXISTING_TAGS=$(regctl tag ls ghcr.io/${{ github.repository }} 2>/dev/null | jq -R . | jq -s .)
 
           ALL_VERSIONS=$(gh release list --jq '[.[].tagName]' --json tagName -R kubernetes/kubernetes)
 
