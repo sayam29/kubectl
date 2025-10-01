@@ -27,7 +27,7 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          EXISTING_TAGS=$(crane ls ghcr.io/myuser/kubectl 2>/dev/null | jq -R . | jq -s .)
+          EXISTING_TAGS=$(crane ls ghcr.io/${{ github.repository }} 2>/dev/null | jq -R . | jq -s .)
 
           ALL_VERSIONS=$(gh release list --jq '[.[].tagName]' --json tagName -R kubernetes/kubernetes)
 
